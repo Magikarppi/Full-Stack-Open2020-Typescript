@@ -1,6 +1,7 @@
 import express from 'express';
 
 import patientsService from '../services/patientsService';
+import toNewPatient from '../utils/utils';
 
 const router = express.Router();
 
@@ -10,22 +11,15 @@ router.get('/', (_req, res) => {
 
 router.post('/', (req, res) => {
   try {
-    const newPatient = 
+    const patientData = toNewPatient(req.body);
+
+    const newPatient = patientsService.addPatient(patientData);
+
+    res.json(newPatient);
   } catch (error) {
-    
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    res.status(400).send(error.message);
   }
-  const { id, name, dateOfBirth, ssn, gender, occupation } = req.body;
-
-  const newPatient = patientsService.addPatient({
-    id,
-    name,
-    dateOfBirth,
-    ssn,
-    gender,
-    occupation,
-  });
-
-  res.json(newPatient);
 });
 
 export default router;

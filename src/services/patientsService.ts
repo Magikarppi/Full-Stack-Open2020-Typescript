@@ -1,6 +1,6 @@
 import patientData from '../../data/patients.json';
 
-import { Patient, PatientWithoutSsn } from '../types/types';
+import { Patient, PatientWithoutSsn, PatientWithoutId } from '../types/types';
 
 const patients: Array<Patient> = patientData;
 const patientsWithoutSsn: Array<PatientWithoutSsn> = patientData.map((pat) => {
@@ -21,16 +21,18 @@ const getPatientsWithoutSsn = (): Array<PatientWithoutSsn> => {
   return patientsWithoutSsn;
 };
 
-const addPatient = (): <Patient> => {
-
+const addPatient = (newPatientData: PatientWithoutId): Patient => {
   const newPatient = {
-
+    ...newPatientData,
+    id: (Math.random() * 10000).toString(),
   };
-  
-  const updatedPatients = patients.push(newPatient);
-}
+
+  patients.push(newPatient);
+  return newPatient;
+};
 
 export default {
   getPatients,
   getPatientsWithoutSsn,
+  addPatient,
 };
