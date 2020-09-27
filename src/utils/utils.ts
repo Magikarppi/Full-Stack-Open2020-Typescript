@@ -1,4 +1,4 @@
-import { PatientWithoutId, Gender } from '../types/types';
+import { Gender, PatientWithoutEntriesAndId } from '../types/types';
 
 const parseField = (field: unknown): string => {
   if (!field || !(typeof field === 'string')) {
@@ -24,8 +24,8 @@ const parseGender = (gender: unknown): string => {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 //eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const toNewPatient = (object: any): PatientWithoutId => {
-  const newPatient: PatientWithoutId = {
+const toNewPatient = (object: any): PatientWithoutEntriesAndId => {
+  const newPatient: PatientWithoutEntriesAndId = {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     name: parseField(object.name),
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

@@ -1,9 +1,13 @@
 import patientData from '../../data/patients.json';
 
-import { Patient, PatientWithoutSsn, PatientWithoutId } from '../types/types';
+import {
+  PatientWithoutEntries,
+  PublicPatient,
+  PatientWithoutEntriesAndId,
+} from '../types/types';
 
-const patients: Array<Patient> = patientData;
-const patientsWithoutSsn: Array<PatientWithoutSsn> = patientData.map((pat) => {
+const patients: Array<PatientWithoutEntries> = patientData;
+const patientsWithoutSsn: Array<PublicPatient> = patientData.map((pat) => {
   return {
     id: pat.id,
     name: pat.name,
@@ -13,15 +17,22 @@ const patientsWithoutSsn: Array<PatientWithoutSsn> = patientData.map((pat) => {
   };
 });
 
-const getPatients = (): Array<Patient> => {
+const getPatients = (): Array<PatientWithoutEntries> => {
   return patients;
 };
 
-const getPatientsWithoutSsn = (): Array<PatientWithoutSsn> => {
+const getPatientsWithoutSsn = (): Array<PublicPatient> => {
   return patientsWithoutSsn;
 };
 
-const addPatient = (newPatientData: PatientWithoutId): Patient => {
+const getOnePatient = (id: string): PatientWithoutEntries | undefined => {
+  const patient = patients.find((pat) => pat.id === id);
+  return patient;
+};
+
+const addPatient = (
+  newPatientData: PatientWithoutEntriesAndId
+): PatientWithoutEntries => {
   const newPatient = {
     ...newPatientData,
     id: (Math.random() * 10000).toString(),
@@ -35,4 +46,5 @@ export default {
   getPatients,
   getPatientsWithoutSsn,
   addPatient,
+  getOnePatient,
 };
