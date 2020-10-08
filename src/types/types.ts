@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface BaseEntry {
+export interface BaseEntry {
   id: string;
   description: string;
   date: string;

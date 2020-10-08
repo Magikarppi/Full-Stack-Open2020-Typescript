@@ -4,9 +4,11 @@ import {
   PatientWithoutEntries,
   PublicPatient,
   PatientWithoutEntriesAndId,
+  Patient,
+  Entry,
 } from '../types/types';
 
-const patients: Array<PatientWithoutEntries> = patientData;
+const patients: Array<Patient> = patientData;
 const patientsWithoutSsn: Array<PublicPatient> = patientData.map((pat) => {
   return {
     id: pat.id,
@@ -25,21 +27,31 @@ const getPatientsWithoutSsn = (): Array<PublicPatient> => {
   return patientsWithoutSsn;
 };
 
-const getOnePatient = (id: string): PatientWithoutEntries | undefined => {
+const getOnePatient = (id: string): Patient | undefined => {
   const patient = patients.find((pat) => pat.id === id);
   return patient;
 };
 
-const addPatient = (
-  newPatientData: PatientWithoutEntriesAndId
-): PatientWithoutEntries => {
+const addPatient = (newPatientData: PatientWithoutEntriesAndId): Patient => {
   const newPatient = {
     ...newPatientData,
     id: (Math.random() * 10000).toString(),
+    entries: [],
   };
 
   patients.push(newPatient);
   return newPatient;
+};
+
+const addEntry = (entryData: Entry, id: string): Entry => {
+  const patient = getOnePatient(id);
+
+  if (!patient) {
+    throw new Error('Patient not found');
+  }
+
+  patient.entries.push(entryData);
+  return entryData;
 };
 
 export default {
@@ -47,4 +59,5 @@ export default {
   getPatientsWithoutSsn,
   addPatient,
   getOnePatient,
+  addEntry,
 };
