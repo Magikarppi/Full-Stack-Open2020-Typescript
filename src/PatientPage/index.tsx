@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
+
 import { Diagnosis, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
 import {
@@ -9,9 +11,20 @@ import {
   useStateValue,
 } from '../state';
 import EntryDetails from './EntryDetails';
+import AddEntryModal from '../AddEntryModal';
 
 const PatientPage: React.FC = () => {
   const [{ onePatient, diagnoses }, dispatch] = useStateValue();
+
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string | undefined>();
+
+  const openModal = (): void => setModalOpen(true);
+
+  const closeModal = (): void => {
+    setModalOpen(false);
+    setError(undefined);
+  };
 
   const { id } = useParams<{ id: string }>();
 
@@ -58,10 +71,20 @@ const PatientPage: React.FC = () => {
     }
   };
 
+  const submitNewEntry = () => {};
+
   return (
     <>
       {onePatient && diagnoses ? (
         <div>
+          <AddEntryModal
+            modalOpen={modalOpen}
+            onClose={closeModal}
+            error={error}
+            onSubmit={submitNewEntry}
+            patientId={id}
+          />
+          <Button onClick={() => openModal()}>Add New Entry</Button>
           <h2>{onePatient.name}</h2>
           <p>{onePatient.ssn}</p>
           <p>{onePatient.occupation}</p>

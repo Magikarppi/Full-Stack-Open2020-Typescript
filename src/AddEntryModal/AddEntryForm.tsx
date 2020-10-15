@@ -3,7 +3,8 @@ import { Grid, Button } from 'semantic-ui-react';
 import { Field, Formik, Form } from 'formik';
 
 import { Entry, HealthCheckRating } from '../types';
-import { TextField } from '../AddPatientModal/FormField';
+import { DiagnosisSelection, TextField } from '../AddPatientModal/FormField';
+import { useStateValue } from '../state';
 
 interface Props {
   onSubmit: (values: Entry) => void;
@@ -11,7 +12,11 @@ interface Props {
   patientId: string;
 }
 
+// export type EntryFormValues = <Entry>;
+
 const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel, patientId }) => {
+  const [{ diagnoses }] = useStateValue();
+
   return (
     <Formik
       initialValues={{
@@ -25,7 +30,7 @@ const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel, patientId }) => {
       }}
       onSubmit={onSubmit}
     >
-      {({ isValid, dirty }) => {
+      {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
         return (
           <Form className="form-ui">
             <Field
@@ -51,6 +56,11 @@ const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel, patientId }) => {
               placeholder="Type"
               name="type"
               component={TextField}
+            />
+            <DiagnosisSelection
+              setFieldValue={setFieldValue}
+              setFieldTouched={setFieldTouched}
+              diagnoses={Object.values(diagnoses)}
             />
           </Form>
         );
