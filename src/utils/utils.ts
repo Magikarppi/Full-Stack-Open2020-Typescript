@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
   BaseEntry,
   Entry,
@@ -46,7 +49,8 @@ export const toNewPatient = (object: any): PatientWithoutEntriesAndId => {
   return newPatient;
 };
 
-export const toNewEntry = (object: Entry): Entry => {
+export const toNewEntry = (object: any): Entry => {
+  console.log('object:', object);
   const baseEntry: BaseEntry = {
     id: Math.floor(Math.random() * 100000).toString(),
     description: parseField(object.description),
@@ -54,6 +58,7 @@ export const toNewEntry = (object: Entry): Entry => {
     specialist: object.specialist,
     diagnosisCodes: object.diagnosisCodes,
   };
+  console.log('baseEntry', baseEntry);
 
   switch (object.type) {
     case 'HealthCheck':
@@ -63,17 +68,27 @@ export const toNewEntry = (object: Entry): Entry => {
         type: 'HealthCheck',
       };
     case 'OccupationalHealthcare':
+      let sickLeave;
+      if (object.sickLeaveStartDate && object.sickLeaveEndDate) {
+        sickLeave = {
+          startDate: object.sickLeaveStartDate,
+          endDate: object.sickLeaveEndDate,
+        };
+      }
       return {
         ...baseEntry,
         type: 'OccupationalHealthcare',
         employerName: object.employerName,
-        sickLeave: object.sickLeave,
+        sickLeave,
       };
     case 'Hospital':
       return {
         ...baseEntry,
         type: 'Hospital',
-        discharge: object.discharge,
+        discharge: {
+          date: object.dischargeDate,
+          criteria: object.dischargeCriteria,
+        },
       };
 
     default:

@@ -33,9 +33,11 @@ router.post('/', (req, res) => {
 });
 
 router.post('/:id/entries', (req, res) => {
+  console.log('req.body', req.body);
   try {
-    const entry = toNewEntry({ ...req.body, date: new Date() });
+    const entry = toNewEntry({ ...req.body, date: new Date().toString() });
     const id = req.params.id;
+    console.log('Entry:', entry);
 
     const newPatientEntry = patientsService.addEntry(entry, id);
 
