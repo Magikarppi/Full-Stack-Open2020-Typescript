@@ -41,6 +41,12 @@ export type Entry =
   | OccupationalHealthcareEntry
   | HospitalEntry;
 
+export enum EntryType {
+  'HealthCheck' = 'HealthCheck',
+  'Hospital' = 'Hospital',
+  'OccupationalHealthcare' = 'OccupationalHealthcare',
+}
+
 export interface EntryFormValues extends BaseEntry {
   type: string;
   healthCheckRating?: HealthCheckRating;
