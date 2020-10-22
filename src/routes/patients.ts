@@ -33,11 +33,13 @@ router.post('/', (req, res) => {
 });
 
 router.post('/:id/entries', (req, res) => {
-  console.log('req.body', req.body);
   try {
-    const entry = toNewEntry({ ...req.body, date: new Date().toString() });
+    const today = new Date();
+    const entry = toNewEntry({
+      ...req.body,
+      date: `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`,
+    });
     const id = req.params.id;
-    console.log('Entry:', entry);
 
     const newPatientEntry = patientsService.addEntry(entry, id);
 

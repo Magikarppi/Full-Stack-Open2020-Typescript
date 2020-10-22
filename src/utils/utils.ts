@@ -50,7 +50,6 @@ export const toNewPatient = (object: any): PatientWithoutEntriesAndId => {
 };
 
 export const toNewEntry = (object: any): Entry => {
-  console.log('object:', object);
   const baseEntry: BaseEntry = {
     id: Math.floor(Math.random() * 100000).toString(),
     description: parseField(object.description),
@@ -58,7 +57,6 @@ export const toNewEntry = (object: any): Entry => {
     specialist: object.specialist,
     diagnosisCodes: object.diagnosisCodes,
   };
-  console.log('baseEntry', baseEntry);
 
   switch (object.type) {
     case 'HealthCheck':
