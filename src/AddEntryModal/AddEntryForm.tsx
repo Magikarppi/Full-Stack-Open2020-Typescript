@@ -51,11 +51,13 @@ const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel, patientId }) => {
       case 'OccupationalHealthcare':
         return (
           <>
+            Sick leave start
             <Field
               label="SickLeaveStartDate"
               name="sickLeaveStartDate"
               placeholder="YYYY-MM-DD"
             />
+            Sick leave end
             <Field
               label="SickLeaveEndDate"
               name="sickLeaveEndDate"
@@ -98,6 +100,11 @@ const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel, patientId }) => {
         specialist: '',
         diagnosisCodes: [],
         healthCheckRating: HealthCheckRating.Healthy,
+        sickLeaveEndDate: '',
+        sickLeaveStartDate: '',
+        dischargeDate: '',
+        dischargeCriteria: '',
+        employerName: '',
       }}
       onSubmit={onSubmit}
       validate={(values) => {
@@ -120,11 +127,6 @@ const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel, patientId }) => {
             errors.dischargeDate = requiredError;
           }
         }
-        if (values.type === 'HealthCheck') {
-          if (!values.healthCheckRating) {
-            errors.healthCheckRating = requiredError;
-          }
-        }
         if (values.type === 'OccupationalHealthcare') {
           if (!values.employerName) {
             errors.employerName = requiredError;
@@ -140,7 +142,6 @@ const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel, patientId }) => {
       }}
     >
       {({ isValid, dirty, setFieldValue, setFieldTouched, values }) => {
-        console.log('isValid:', isValid);
         return (
           <Form className="form-ui">
             <SelectField label="Type" name="type" options={typeOptions} />

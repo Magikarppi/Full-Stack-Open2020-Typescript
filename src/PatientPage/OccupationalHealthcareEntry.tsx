@@ -4,7 +4,6 @@ import { OccupationalHealthcareEntry } from '../types';
 const OccupationalHealthcareEntryData: React.FC<{
   entry: OccupationalHealthcareEntry;
 }> = ({ entry }) => {
-  console.log('Entry OH', entry);
   return (
     <div key={entry.id}>
       <p>Specialist: {entry.specialist}</p>

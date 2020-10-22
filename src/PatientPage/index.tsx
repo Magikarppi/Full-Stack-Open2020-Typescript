@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { Button } from 'semantic-ui-react';
+import { Button, Divider } from 'semantic-ui-react';
 
 import { Diagnosis, Entry, EntryFormValues, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
@@ -73,13 +73,11 @@ const PatientPage: React.FC = () => {
   };
 
   const submitNewEntry = async (formValues: EntryFormValues) => {
-    console.log('formValues', formValues);
     try {
       const { data: newEntry } = await axios.post<Entry>(
         `${apiBaseUrl}/patients/${id}/entries`,
         formValues
       );
-      console.log('newEntry', newEntry);
       dispatch(addNewEntry(newEntry));
       closeModal();
     } catch (error) {
@@ -123,6 +121,7 @@ const PatientPage: React.FC = () => {
                     ))}
                   </ul>
                 ) : null}
+                <Divider />
               </div>
             );
           })}
