@@ -1,0 +1,1 @@
+This Patentior is the main project of Typescript module (part 9) of Helsinki University's Full stack course 2020. In it user (doctor) can add patients and add entries to keep track of the patient's status.
